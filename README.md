@@ -154,6 +154,236 @@ RDBMS : MYSQL_Server 9.1.0
 
 ## 2. API 명세서
 
+### 1) 통화(화폐) 테이블 (Currency Table)
+
+<table>
+    <tr>
+      <th scope="col">기능</td>
+      <th scope="col">Method</td>
+      <th scope="col">URL</th>
+      <th scope="col">Request</td>
+      <th scope="col">Response</td>
+      <th scope="col">상태코드</td>
+    </tr>
+    <tr>
+      <td>통화 등록</td>
+      <td>POST</td>
+      <td>/currencies</td>
+      <td>{
+          "currencyName" : "USD",
+          "exchangeRate" : 1390,
+          "symbol" : "$"
+          }
+      </td>
+      <td>{
+          "id" : 1,
+          "currencyName" : "USD",
+          "exchangeRate" : 1390,
+          "symbol" : "$"
+          }
+      </td>
+      <td>200: 정상, 400: 잘못된 값 입력</td>
+    </tr>
+    <tr>
+      <td>전체 통화 정보 조회</td>
+      <td>GET</td>
+      <td>/currencies</td>
+      <td>없음</td>
+      <td>[{
+          "id" : 1,
+          "currencyName" : "USD",
+          "exchangeRate" : 1390,
+          "symbol" : "$"
+          },
+      {
+          "id" : 2,
+          "currencyName" : "JPY",
+          "exchangeRate" : 920,
+          "symbol" : "¥"
+          }
+      ]</td>
+      <td>200: 정상, 404: 해당 데이터 존재하지 않음</td>
+    </tr>
+    <tr>
+      <td>단건 통화 정보 조회</td>
+      <td>GET</td>
+      <td>/currencies/{id}</td>
+      <td>PathVariable : id</td>
+      <td>{
+          "id" : 1,
+          "currencyName" : "USD",
+          "exchangeRate" : 1390,
+          "symbol" : "$"
+          }</td>
+      <td>200: 정상, 404: 해당 데이터 존재하지 않음</td>
+    </tr>
+  </table>
+
+### 2) 유저 테이블 (User Table)
+
+<table>
+    <tr>
+      <th scope="col">기능</td>
+      <th scope="col">Method</td>
+      <th scope="col">URL</th>
+      <th scope="col">Request</td>
+      <th scope="col">Response</td>
+      <th scope="col">상태코드</td>
+    </tr>
+    <tr>
+      <td>유저 생성</td>
+      <td>POST</td>
+      <td>users</td>
+      <td>{
+          "name" : "홍길동",
+          "email" : "sparta1@teamsparta.com"
+          }
+      </td>
+      <td>{
+          "id" : 1
+          "name" : "홍길동",
+          "email" : "sparta1@teamsparta.com"
+          }
+      </td>
+      <td>200: 정상, 400: 잘못된 값 입력</td>
+    </tr>
+    <tr>
+      <td>유저 전체 조회</td>
+      <td>GET</td>
+      <td>/users</td>
+      <td>없음</td>
+      <td>[
+          {
+          "id" : 1
+          "name" : "홍길동",
+          "email" : "sparta1@teamsparta.com"
+          },
+          {
+          "id" : 2
+          "name" : "김짱구",
+          "email" : "sparta2@teamsparta.com"
+          }
+      ]</td>
+      <td>200: 정상, 400: 잘못된 값 입력</td>
+    </tr>
+    <tr>
+      <td>유저 단건 조회</td>
+      <td>GET</td>
+      <td>/users/{id}</td>
+      <td>PathVariable : id</td>
+      <td>{
+          "id" : 1
+          "name" : "홍길동",
+          "email" : "sparta1@teamsparta.com"
+          }
+      </td>
+      <td>200: 정상, 400: 잘못된 값 입력</td>
+    </tr>
+    <tr>
+      <td>유저 삭제 </td>
+      <td>Delete</td>
+      <td>/users/{id}</td>
+      <td>PathVariable : id</td>
+      <td>{
+          "정상적으로 삭제되었습니다" 
+          }
+      </td>
+      <td>200: 정상,  404: 해당 데이터 존재하지 않음</td>
+    </tr>
+    
+  </table>
+
+### 3) 환전 테이블 (Exchange Table)
+
+<table>
+    <tr>
+      <th scope="col">기능</td>
+      <th scope="col">Method</td>
+      <th scope="col">URL</th>
+      <th scope="col">Request</td>
+      <th scope="col">Response</td>
+      <th scope="col">상태코드</td>
+    </tr>
+    <tr>
+      <td>환전 요청 수행</td>
+      <td>POST</td>
+      <td>/exchanges</td>
+      <td>{
+          "userId" : 1,
+          "currencyId" : 1,
+          "amount" : 10000
+          }
+      </td>
+      <td>
+           {
+          "id" : 1,
+          "currencyName" : "USD",
+          "amountAfterExchange" : 7.63,
+          "status" : NOLMAL,
+          "createdAt" : "2024-11-29 12:50:34",
+          "modifiedAt" : "2024-11-29 12:50:34"
+          }
+      </td>
+      <td>200: 정상, 400: 잘못된 값 입력</td>
+    </tr>
+    <tr>
+      <td>특정 고객의 환전 요청 리스트 조회</td>
+      <td>GET</td>
+      <td>/exchanges/{userId}</td>
+      <td>PathVariable : userId</td>
+      <td>
+          [
+          {
+          "id" : 1,
+          "currencyName" : "USD",
+          "amountAfterExchange" : 7.63,
+          "status" : NOLMAL,
+          "createdAt" : "2024-11-29 12:50:34",
+          "modifiedAt" : "2024-11-29 12:50:34"
+          },
+          {
+          "id" : 1,
+          "currencyName" : "USD",
+          "amountAfterExchange" : 5.07,
+          "status" : NOLMAL,
+          "createdAt" : "2024-11-29 17:30:14",
+          "modifiedAt" : "2024-11-29 17:30:14"
+          }
+          ]
+        </td>
+      <td>200: 정상, 400: 잘못된 값 입력</td>
+    </tr>
+    <tr>
+      <td>특정 고객의 환전 요청 그룹화 조회</td>
+      <td>GET</td>
+      <td>/exchanges/{userId}/groups</td>
+      <td>PathVariable : userId</td>
+      <td>
+          {
+          "count" : 10,
+          "totalAmountInKrw" : 870000
+          }
+      </td>
+      <td>200: 정상, 400: 잘못된 값 입력</td>
+    </tr>
+    <tr>
+      <td>요청 취소</td>
+      <td>PATCH</td>
+      <td>/exchanges/{id}</td>
+      <td>PathVariable : id</td>
+      <td>
+          {
+          "id" : 1,
+          "currencyName" : "USD",
+          "amountAfterExchange" : 7.63,
+          "status" : NOLMAL,
+          "createdAt" : "2024-11-29 12:50:34",
+          "modifiedAt" : "2024-11-29 12:50:34"
+          }
+      </td>
+      <td>200: 정상, 404: 해당 데이터 존재하지 않음</td>
+    </tr>
+  </table>
 
 ## 3. ERD
 
