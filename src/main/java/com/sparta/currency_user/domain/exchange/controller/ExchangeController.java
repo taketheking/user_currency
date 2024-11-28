@@ -2,6 +2,7 @@ package com.sparta.currency_user.domain.exchange.controller;
 
 import com.sparta.currency_user.domain.exchange.dto.ExchangeRequestDto;
 import com.sparta.currency_user.domain.exchange.dto.ExchangeResponseDto;
+import com.sparta.currency_user.domain.exchange.dto.GroupByExchangeRequestDto;
 import com.sparta.currency_user.domain.exchange.service.ExchangeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +38,21 @@ public class ExchangeController {
      *
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<List<ExchangeResponseDto>> findExchangeRequestsByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<ExchangeResponseDto>> findAllByUserId(@PathVariable Long userId) {
         return new ResponseEntity<>(exchangeService.findAllByUserId(userId), HttpStatus.OK);
+    }
+
+    /**
+     *  lv.5 기능 추가
+     *  특정 고객이 요구한 환전 요청을 Group 화 해서 count 와 totalAmount 조회 API
+     *
+     * @param userId  특정 고객 id
+     * @return ResponseEntity<ExchangeResponseDto>  특정 고객이 요구한 환전 요청 조회 결과 응답
+     *
+     */
+    @GetMapping("/{userId}/groups")
+    public ResponseEntity<GroupByExchangeRequestDto> findAllGroupedByUserId(@PathVariable Long userId) {
+        return new ResponseEntity<>(exchangeService.findAllGroupByUserId(userId), HttpStatus.OK);
     }
 
     /**
