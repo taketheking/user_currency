@@ -1,6 +1,7 @@
 package com.sparta.currency_user.domain.exchange.service;
 
 import com.sparta.currency_user.domain.currency.entity.Currency;
+import com.sparta.currency_user.domain.currency.enums.CurrencyDigit;
 import com.sparta.currency_user.domain.currency.repository.CurrencyRepository;
 import com.sparta.currency_user.domain.exchange.dto.ExchangeRequestDto;
 import com.sparta.currency_user.domain.exchange.dto.ExchangeResponseDto;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-
 @Service
 public class ExchangeService {
 
@@ -32,13 +32,15 @@ public class ExchangeService {
         this.exchangeRepository = exchangeRepository;
     }
 
-
     /*
      * 환전 요청 수행
      */
     public ExchangeResponseDto exchange(ExchangeRequestDto exchangeRequestDto) {
         User user = userRepository.findByIdOrElseThrow(exchangeRequestDto.getUserId());
         Currency currency = currencyRepository.findByIdOrElseThrow(exchangeRequestDto.getCurrencyId());
+
+        // 통화별 자리수 가져오기
+        int digit = CurrencyDigit.valueOf(currency.getCurrencyName()).getCurrencyDigit();
 
         BigDecimal amountAfterExchange = exchangeRequestDto.
                 getAmount().
@@ -47,7 +49,7 @@ public class ExchangeService {
         Exchange exchange = new Exchange(user,
                 currency,
                 exchangeRequestDto.getAmount(),
-                amountAfterExchange,
+                amountAfterExchange.multiply(BigDecimal.valueOf(digit)),
                 ExchangeStatus.NORMAL
         );
 
