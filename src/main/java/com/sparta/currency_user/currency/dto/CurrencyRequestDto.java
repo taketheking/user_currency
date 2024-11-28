@@ -1,6 +1,6 @@
-package com.sparta.currency_user.dto;
+package com.sparta.currency_user.currency.dto;
 
-import com.sparta.currency_user.entity.Currency;
+import com.sparta.currency_user.currency.entity.Currency;
 import lombok.Getter;
 
 import java.math.BigDecimal;

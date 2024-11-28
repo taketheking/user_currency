@@ -1,11 +1,12 @@
-package com.sparta.currency_user.entity;
+package com.sparta.currency_user.user.entity;
 
+import com.sparta.currency_user.base.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
 @Getter
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

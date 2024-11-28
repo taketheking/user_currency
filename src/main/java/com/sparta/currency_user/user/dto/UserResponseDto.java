@@ -1,14 +1,14 @@
-package com.sparta.currency_user.dto;
+package com.sparta.currency_user.user.dto;
 
-import com.sparta.currency_user.entity.User;
+import com.sparta.currency_user.user.entity.User;
 import lombok.Getter;
 
 @Getter
 public class UserResponseDto {
-    private Long id;
+    private final Long id;
 
-    private String name;
-    private String email;
+    private final String name;
+    private final String email;
 
     public UserResponseDto(User user) {
         this.id = user.getId();
