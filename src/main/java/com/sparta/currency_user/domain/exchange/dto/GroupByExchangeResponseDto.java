@@ -5,13 +5,13 @@ import lombok.Getter;
 import java.math.BigDecimal;
 
 @Getter
-public class GroupByExchangeRequestDto {
+public class GroupByExchangeResponseDto {
 
     private final Long count;
 
     private final BigDecimal totalAmountInKrw;
 
-    public GroupByExchangeRequestDto(Long count, BigDecimal totalAmountInKrw) {
+    public GroupByExchangeResponseDto(Long count, BigDecimal totalAmountInKrw) {
         this.count = count;
         this.totalAmountInKrw = totalAmountInKrw;
     }

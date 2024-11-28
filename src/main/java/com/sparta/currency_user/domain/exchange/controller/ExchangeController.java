@@ -2,7 +2,7 @@ package com.sparta.currency_user.domain.exchange.controller;
 
 import com.sparta.currency_user.domain.exchange.dto.ExchangeRequestDto;
 import com.sparta.currency_user.domain.exchange.dto.ExchangeResponseDto;
-import com.sparta.currency_user.domain.exchange.dto.GroupByExchangeRequestDto;
+import com.sparta.currency_user.domain.exchange.dto.GroupByExchangeResponseDto;
 import com.sparta.currency_user.domain.exchange.service.ExchangeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class ExchangeController {
      *
      */
     @GetMapping("/{userId}/groups")
-    public ResponseEntity<GroupByExchangeRequestDto> findAllGroupedByUserId(@PathVariable Long userId) {
+    public ResponseEntity<GroupByExchangeResponseDto> findAllGroupedByUserId(@PathVariable Long userId) {
         return new ResponseEntity<>(exchangeService.findAllGroupByUserId(userId), HttpStatus.OK);
     }
 

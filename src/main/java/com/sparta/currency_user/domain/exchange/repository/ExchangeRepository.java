@@ -1,6 +1,6 @@
 package com.sparta.currency_user.domain.exchange.repository;
 
-import com.sparta.currency_user.domain.exchange.dto.GroupByExchangeRequestDto;
+import com.sparta.currency_user.domain.exchange.dto.GroupByExchangeResponseDto;
 import com.sparta.currency_user.domain.exchange.entity.Exchange;
 import com.sparta.currency_user.domain.exchange.enums.ExchangeStatus;
 import com.sparta.currency_user.global.error.ExceptionType;
@@ -21,10 +21,10 @@ public interface ExchangeRepository extends JpaRepository<Exchange, Long> {
     }
 
 
-    @Query("select new com.sparta.currency_user.domain.exchange.dto.GroupByExchangeRequestDto(count(ex), sum(ex.amountInKrw)) " +
+    @Query("select new com.sparta.currency_user.domain.exchange.dto.GroupByExchangeResponseDto(count(ex), sum(ex.amountInKrw)) " +
             "from Exchange ex " +
             "join ex.user u "+
             "WHERE ex.status = :status and u.id = :userId " +
             "group by u.id")
-    GroupByExchangeRequestDto findAllGroupByUserId(@Param("userId") Long userId, @Param("status") ExchangeStatus status);
+    GroupByExchangeResponseDto findAllGroupByUserId(@Param("userId") Long userId, @Param("status") ExchangeStatus status);
 }

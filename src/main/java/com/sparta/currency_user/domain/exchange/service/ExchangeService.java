@@ -5,7 +5,7 @@ import com.sparta.currency_user.domain.currency.enums.CurrencyDigit;
 import com.sparta.currency_user.domain.currency.repository.CurrencyRepository;
 import com.sparta.currency_user.domain.exchange.dto.ExchangeRequestDto;
 import com.sparta.currency_user.domain.exchange.dto.ExchangeResponseDto;
-import com.sparta.currency_user.domain.exchange.dto.GroupByExchangeRequestDto;
+import com.sparta.currency_user.domain.exchange.dto.GroupByExchangeResponseDto;
 import com.sparta.currency_user.domain.exchange.entity.Exchange;
 import com.sparta.currency_user.domain.exchange.enums.ExchangeStatus;
 import com.sparta.currency_user.domain.exchange.repository.ExchangeRepository;
@@ -71,7 +71,7 @@ public class ExchangeService {
      *
      * 상태 확인도 추가 - 취소된 요청은 제외
      */
-    public GroupByExchangeRequestDto findAllGroupByUserId(Long userId) {
+    public GroupByExchangeResponseDto findAllGroupByUserId(Long userId) {
         return exchangeRepository.findAllGroupByUserId(userId, ExchangeStatus.NORMAL);
     }
 
