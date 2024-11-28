@@ -5,7 +5,7 @@ import com.sparta.currency_user.domain.exchange.dto.ExchangeResponseDto;
 import com.sparta.currency_user.domain.exchange.dto.GroupByExchangeRequestDto;
 import com.sparta.currency_user.domain.exchange.service.ExchangeService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/exchanges")
-@RequiredArgsConstructor
 public class ExchangeController {
     private final ExchangeService exchangeService;
+
+    @Autowired
+    public ExchangeController(ExchangeService exchangeService) {
+        this.exchangeService = exchangeService;
+    }
 
     /**
      *  환전 요청 수행 API

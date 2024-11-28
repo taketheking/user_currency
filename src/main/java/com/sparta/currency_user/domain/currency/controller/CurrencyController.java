@@ -4,7 +4,7 @@ import com.sparta.currency_user.domain.currency.dto.CurrencyRequestDto;
 import com.sparta.currency_user.domain.currency.dto.CurrencyResponseDto;
 import com.sparta.currency_user.domain.currency.service.CurrencyService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/currencies")
-@RequiredArgsConstructor
 public class CurrencyController {
     private final CurrencyService currencyService;
+
+    @Autowired
+    public CurrencyController(CurrencyService currencyService) {
+        this.currencyService = currencyService;
+    }
 
     /**
      *  통화 정보 등록 API
@@ -40,7 +44,7 @@ public class CurrencyController {
     }
 
     /**
-     *  통화 정보 등록 API
+     *  특정 통화 정보 조회 API
      *
      * @param id    특정 통화의 id
      * @return ResponseEntity<CurrencyResponseDto>  통화 정보 및 http 상태 전달
