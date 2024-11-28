@@ -1,0 +1,38 @@
+package com.sparta.currency_user.domain.currency.dto;
+
+import com.sparta.currency_user.domain.currency.entity.Currency;
+import lombok.Getter;
+
+import java.math.BigDecimal;
+
+@Getter
+public class CurrencyResponseDto {
+    private final Long id;
+
+    private final String currencyName;
+    private final BigDecimal exchangeRate;
+    private final String symbol;
+
+    public CurrencyResponseDto(Currency currency) {
+        this.id = currency.getId();
+        this.currencyName = currency.getCurrencyName();
+        this.exchangeRate = currency.getExchangeRate();
+        this.symbol = currency.getSymbol();
+    }
+
+    public CurrencyResponseDto(Long id, String currencyName, BigDecimal exchangeRate, String symbol) {
+        this.id = id;
+        this.currencyName = currencyName;
+        this.exchangeRate = exchangeRate;
+        this.symbol = symbol;
+    }
+
+    public static CurrencyResponseDto toDto(Currency currency) {
+        return new CurrencyResponseDto(
+            currency.getId(),
+            currency.getCurrencyName(),
+            currency.getExchangeRate(),
+            currency.getSymbol()
+        );
+    }
+}
