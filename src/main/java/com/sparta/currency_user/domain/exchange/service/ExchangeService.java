@@ -4,6 +4,7 @@ import com.sparta.currency_user.domain.currency.entity.Currency;
 import com.sparta.currency_user.domain.currency.repository.CurrencyRepository;
 import com.sparta.currency_user.domain.exchange.dto.ExchangeRequestDto;
 import com.sparta.currency_user.domain.exchange.dto.ExchangeResponseDto;
+import com.sparta.currency_user.domain.exchange.dto.GroupByExchangeRequestDto;
 import com.sparta.currency_user.domain.exchange.entity.Exchange;
 import com.sparta.currency_user.domain.exchange.enums.ExchangeStatus;
 import com.sparta.currency_user.domain.exchange.repository.ExchangeRepository;
@@ -61,6 +62,15 @@ public class ExchangeService {
      */
     public List<ExchangeResponseDto> findAllByUserId(Long userId) {
         return exchangeRepository.findAllByUserId(userId).stream().map(ExchangeResponseDto::toDto).toList();
+    }
+
+    /*
+     * lv.5 특정 고객의 환전 요청을 그룹화하여 조회
+     *
+     * 상태 확인도 추가 - 취소된 요청은 제외
+     */
+    public GroupByExchangeRequestDto findAllGroupByUserId(Long userId) {
+        return exchangeRepository.findAllGroupByUserId(userId, ExchangeStatus.NORMAL);
     }
 
     /*
